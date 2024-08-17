@@ -1,0 +1,19 @@
+{
+  "name": "@car-qr-link/apis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Aleksandr Soloshenko <carqr@capcom.me>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/node": "^22.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}

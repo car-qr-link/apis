@@ -9,6 +9,10 @@ export enum NotificationChannel {
  */
 export interface Contact {
     /**
+     * The notification channel for the contact.
+     */
+    channel: NotificationChannel;
+    /**
      * The address of the contact.
      */
     address: string;
@@ -29,7 +33,7 @@ export interface Account {
      * The keys of the map are the notification channels, and the values
      * are the contact information for the corresponding channels.
      */
-    contacts: Record<NotificationChannel, Contact>;
+    contacts: Contact[];
 }
 
 /**

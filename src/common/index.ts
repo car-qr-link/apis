@@ -36,8 +36,20 @@ export interface BaseAccount {
     contacts: Contact[];
 }
 
+/**
+ * An interface representing a QR code.
+ */
 export interface Qr {
+    /**
+     * The unique identifier of the QR code.
+     */
     id: string;
+
+    /**
+     * The license plate number associated with the QR code.
+     *
+     * This field is optional and may not be present for all QR codes.
+     */
     licensePlate?: string;
 }
 

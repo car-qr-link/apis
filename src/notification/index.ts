@@ -1,4 +1,4 @@
-import { Account } from "../common";
+import { BaseAccount } from "../common";
 
 
 /**
@@ -72,7 +72,7 @@ export interface SendNotificationRequest {
     /**
      * The account that the notification is being sent to.
      */
-    account: Account;
+    account: BaseAccount;
 
     /**
      * The notification to be sent. This can be a partial notification where

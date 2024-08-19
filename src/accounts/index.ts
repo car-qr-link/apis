@@ -1,12 +1,11 @@
-import { Account as BaseAccount, Contact } from "../common";
+import { BaseAccount as BaseAccount, Contact, Qr } from "../common";
 
 export interface Account extends BaseAccount {
     name?: string;
-    licensePlate?: string;
 }
 
 export interface GetByQrParams {
-    qrId: string;
+    qr: Qr;
 }
 
 export interface GetContactParams {
@@ -17,11 +16,12 @@ export type FindAccountRequest = GetByQrParams | GetContactParams;
 
 export interface FindAccountResponse {
     account: Account;
+    qrs: Qr[];
 }
 
 export interface LinkQRRequest {
     account: Omit<Account, "id">;
-    qrId: string;
+    qr: Qr;
 }
 
 export type LinkQrResponse = FindAccountResponse;

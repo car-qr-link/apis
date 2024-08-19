@@ -21,7 +21,7 @@ export interface Contact {
 /**
  * An interface representing an account.
  */
-export interface Account {
+export interface BaseAccount {
     /**
      * The unique identifier of the account.
      */
@@ -34,6 +34,11 @@ export interface Account {
      * are the contact information for the corresponding channels.
      */
     contacts: Contact[];
+}
+
+export interface Qr {
+    id: string;
+    licensePlate?: string;
 }
 
 /**

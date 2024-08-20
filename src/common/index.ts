@@ -1,5 +1,5 @@
 export enum NotificationChannel {
-    Sms = 'sms',
+    Phone = 'phone',
     Email = 'email',
     Telegram = 'telegram',
 }
@@ -28,10 +28,7 @@ export interface BaseAccount {
     id: string;
 
     /**
-     * A map of notification channels to contact information.
-     *
-     * The keys of the map are the notification channels, and the values
-     * are the contact information for the corresponding channels.
+     * Contacts associated with the account.
      */
     contacts: Contact[];
 }
@@ -51,6 +48,11 @@ export interface Qr {
      * This field is optional and may not be present for all QR codes.
      */
     licensePlate?: string;
+
+    /**
+     * The account ID associated with the QR code.
+     */
+    accountId?: string;
 }
 
 /**

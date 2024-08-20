@@ -1,11 +1,10 @@
-import { BaseAccount as BaseAccount, Contact, Qr } from "../common";
+import { BaseAccount, Qr } from "../common";
 
 
 /**
  * Interface representing an Account.
  *
- * This interface extends the BaseAccount interface and adds an optional
- * 'name' field.
+ * This interface extends the BaseAccount interface.
  */
 export interface Account extends BaseAccount {
     /**
@@ -14,43 +13,25 @@ export interface Account extends BaseAccount {
     name?: string;
 }
 
-
 /**
- * Interface representing the parameters for getting an account by QR.
+ * Interface representing the response from a GetAccounts request.
  */
-export interface GetByQrParams {
+export interface GetAccountsResponse {
     /**
-     * The QR object used to identify the account.
+     * The accounts that match the filters.
      */
-    qr: Qr;
+    accounts: Account[];
 }
 
-/**
- * Interface representing the parameters for getting an account by contact.
- */
-export interface GetByContactParams {
-    /**
-     * The contact object used to identify the account.
-     */
-    contact: Contact;
+export const enum GetAccountFieldParam {
+    ID = "id",
+    PHONE = "phone",
 }
-
-
-/**
- * Union type representing the possible request types for finding an account.
- *
- * This type is used to represent the different ways in which an account can be
- * found. It can be either a `GetByQrParams` object or a `GetByContactParams`
- * object.
- */
-export type FindAccountRequest =
-    GetByQrParams |
-    GetByContactParams;
 
 /**
  * Interface representing the response from a FindAccount request.
  */
-export interface FindAccountResponse {
+export interface GetAccountResponse {
     /**
      * The account data.
      */
@@ -74,10 +55,10 @@ export interface LinkQRRequest {
     /**
      * The QR to link to the account.
      */
-    qr: Qr;
+    qr: Pick<Qr, "licensePlate">;
 }
 
-export type LinkQrResponse = FindAccountResponse;
+export type LinkQrResponse = GetAccountResponse;
 
 /**
  * Interface representing the request to edit an account.
@@ -89,4 +70,58 @@ export interface EditAccountRequest {
     account: Omit<Account, "id">;
 }
 
-export type EditAccountResponse = FindAccountResponse;
+export type EditAccountResponse = GetAccountResponse;
+
+/**
+ * Interface representing the request parameters for getting QRs associated with an account.
+ */
+export interface GetQrsParams {
+    /**
+     * The ID of the account to get QRs for.
+     * If it is empty or `null`, it will return all QRs not associated with any account.
+     * If it is not provided, it will return all QRs.
+     */
+    accountId?: string | null;
+}
+
+/**
+ * Interface representing the response from a GetQrs request.
+ */
+export interface GetQrsResponse {
+    /**
+     * An array of QR codes.
+     */
+    qrs: Qr[];
+}
+
+/**
+ * Interface representing the response from a GetQr request.
+ */
+export interface GetQrResponse {
+    /**
+     * The QR code.
+     */
+    qr: Qr;
+
+    /**
+     * The account the QR code is associated with, if any.
+     */
+    account?: Account;
+}
+
+/**
+ * Interface representing the request to generate QR codes.
+ */
+export interface EmitQrsRequest {
+    /**
+     * The number of QR codes to generate.
+     */
+    count: number;
+
+    /**
+     * The length of each QR code.
+     */
+    length: number;
+}
+
+export type EmitQrsResponse = GetQrsResponse;

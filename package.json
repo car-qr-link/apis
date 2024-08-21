@@ -9,11 +9,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Aleksandr Soloshenko <carqr@capcom.me>",
+  "author": "Aleksandr Soloshenko <admin@carqr.link>",
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^22.4.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "joi": "^17.13.3"
   }
 }

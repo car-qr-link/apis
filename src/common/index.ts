@@ -71,5 +71,5 @@ export interface ErrorResponse {
      * additional information about the error. The type of the data can
      * vary depending on the specific error.
      */
-    details: any;
+    details?: any;
 }

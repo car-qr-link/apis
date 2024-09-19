@@ -7,11 +7,23 @@ export class HttpError extends BaseError {
     }
 }
 
-export class BadRequestError extends HttpError { }
+export class BadRequestError extends HttpError {
+    constructor(message: string) {
+        super(message, 400);
+    }
+}
 
-export class NotFoundError extends HttpError { }
+export class NotFoundError extends HttpError {
+    constructor(message: string) {
+        super(message, 404);
+    }
+}
 
-export class ConflictError extends HttpError { }
+export class ConflictError extends HttpError {
+    constructor(message: string) {
+        super(message, 409);
+    }
+}
 
 export abstract class HttpClient {
     protected async throwOnError<T>(response: Response): Promise<T> {
@@ -24,11 +36,11 @@ export abstract class HttpClient {
 
         switch (response.status) {
             case 400:
-                throw new BadRequestError(message, response.status);
+                throw new BadRequestError(message);
             case 404:
-                throw new NotFoundError(message, response.status);
+                throw new NotFoundError(message);
             case 409:
-                throw new ConflictError(message, response.status);
+                throw new ConflictError(message);
         }
 
         throw new HttpError(message, response.status);

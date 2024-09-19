@@ -73,3 +73,19 @@ export interface ErrorResponse {
      */
     details?: any;
 }
+
+export abstract class BaseError extends Error {
+    constructor(message: string) {
+        super(message);
+
+        this.name = this.constructor.name;
+
+        Error.captureStackTrace(this, this.constructor);
+    }
+}
+
+export class HttpError extends BaseError {
+    constructor(message: string, public readonly status: number) {
+        super(message);
+    }
+}

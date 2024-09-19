@@ -1,11 +1,12 @@
 import { URLSearchParams } from "url";
-import { ErrorResponse, HttpError } from "../common";
+import { ErrorResponse, HttpClient, HttpError } from "../common";
 import { EditAccountRequest, EditAccountResponse, EmitQrsRequest, EmitQrsResponse, GetAccountFieldParam, GetAccountResponse, GetAccountsResponse, GetQrResponse, GetQrsResponse, LinkQrRequest, LinkQrResponse } from "./dto";
 
-export class Client {
+export class Client extends HttpClient {
     constructor(
         protected readonly baseUrl: string
     ) {
+        super();
     }
 
     //#region Accounts
@@ -98,30 +99,4 @@ export class Client {
         return await this.throwOnError(response);
     }
     //#endregion
-
-    protected async throwOnError<T>(response: Response): Promise<T> {
-        if (response.ok) {
-            return await response.json();
-        }
-
-        const body = await response.json();
-        const { message } = body as ErrorResponse;
-
-        switch (response.status) {
-            case 400:
-                throw new BadRequestError(message, response.status);
-            case 404:
-                throw new NotFoundError(message, response.status);
-            case 409:
-                throw new ConflictError(message, response.status);
-        }
-
-        throw new HttpError(message, response.status);
-    }
 }
-
-export class BadRequestError extends HttpError { }
-
-export class NotFoundError extends HttpError { }
-
-export class ConflictError extends HttpError { }

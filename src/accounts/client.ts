@@ -1,6 +1,6 @@
 import { URLSearchParams } from "url";
 import { ErrorResponse, HttpError } from "../common";
-import { EditAccountRequest, EditAccountResponse, EmitQrsRequest, EmitQrsResponse, GetAccountFieldParam, GetAccountResponse, GetAccountsResponse, GetQrsResponse, LinkQrRequest, LinkQrResponse } from "./dto";
+import { EditAccountRequest, EditAccountResponse, EmitQrsRequest, EmitQrsResponse, GetAccountFieldParam, GetAccountResponse, GetAccountsResponse, GetQrResponse, GetQrsResponse, LinkQrRequest, LinkQrResponse } from "./dto";
 
 export class Client {
     constructor(
@@ -49,6 +49,14 @@ export class Client {
     //#endregion
 
     //#region QRs
+    async getQr(
+        id: string
+    ): Promise<GetQrResponse> {
+        const response = await fetch(`${this.baseUrl}/qrs/${id}`);
+
+        return await this.throwOnError(response);
+    }
+
     async getQrs(
         accountId: string | null | undefined = undefined
     ): Promise<GetQrsResponse> {

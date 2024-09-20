@@ -42,7 +42,7 @@ export interface Notification {
     /**
      * The unique identifier of the reason for the notification.
      */
-    reasonId: string;
+    reasonId?: string;
 
     /**
      * The date and time when the notification was sent.

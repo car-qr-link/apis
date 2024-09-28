@@ -1,5 +1,5 @@
 import { URLSearchParams } from "url";
-import { ErrorResponse, HttpClient, HttpError } from "../common";
+import { HttpClient } from "../common";
 import { EditAccountRequest, EditAccountResponse, EmitQrsRequest, EmitQrsResponse, GetAccountFieldParam, GetAccountResponse, GetAccountsResponse, GetQrResponse, GetQrsResponse, LinkQrRequest, LinkQrResponse } from "./dto";
 
 export class Client extends HttpClient {

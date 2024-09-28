@@ -72,7 +72,7 @@ export interface SendNotificationRequest {
     /**
      * The account that the notification is being sent to.
      */
-    account: BaseAccount;
+    account: Pick<BaseAccount, 'id'>;
 
     /**
      * The notification to be sent. This can be a partial notification where

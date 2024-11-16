@@ -44,23 +44,6 @@ export interface GetAccountResponse {
 }
 
 /**
- * Interface representing the request to link a QR to an account.
- */
-export interface LinkQrRequest {
-    /**
-     * The account data.
-     */
-    account: Omit<Account, "id">;
-
-    /**
-     * The QR to link to the account.
-     */
-    qr: Pick<Qr, "licensePlate">;
-}
-
-export type LinkQrResponse = GetAccountResponse;
-
-/**
  * Interface representing the request to edit an account.
  */
 export interface EditAccountRequest {
@@ -125,3 +108,20 @@ export interface EmitQrsRequest {
 }
 
 export type EmitQrsResponse = GetQrsResponse;
+
+/**
+ * Interface representing the request to link a QR to an account.
+ */
+export interface LinkQrRequest {
+    /**
+     * The account data.
+     */
+    account: Omit<Account, "id">;
+
+    /**
+     * The QR to link to the account.
+     */
+    qr: Pick<Qr, "licensePlate">;
+}
+
+export type LinkQrResponse = GetQrResponse;

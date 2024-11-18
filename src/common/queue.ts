@@ -1,4 +1,5 @@
-import { createClient, RedisClientType } from "redis";
+import EventEmitter from "events";
+import { ClientClosedError, createClient, RedisClientType } from "redis";
 
 export class SubscribeOptions {
     public readonly interval: number;
@@ -22,10 +23,11 @@ export class SubscribeOptions {
     }
 }
 
-export abstract class QueueClient<O, I> {
+export abstract class QueueClient<O, I> extends EventEmitter<{ error: [Error] }> {
     protected readonly client: RedisClientType;
 
     public constructor(brokerUrl: string) {
+        super();
         this.client = createClient({ url: brokerUrl });
         this.client.on('error', (err) => {
             throw err;
@@ -41,6 +43,8 @@ export abstract class QueueClient<O, I> {
         callback: (queueName: string, message: I) => Promise<void>,
         options?: SubscribeOptions
     ): Promise<() => void> {
+        let isRunning = true;
+
         const readNext = async () => {
             let interval = options?.interval || 1;
             try {
@@ -51,15 +55,28 @@ export abstract class QueueClient<O, I> {
 
                 const payload = JSON.parse(message.element);
                 if (!payload) {
-                    console.error(`Invalid payload:`, message.element);
+                    this.emit('error', new Error(`Invalid payload: ${message.element}`));
                     return;
                 }
 
                 await callback(message.key, payload);
                 interval = 0;
             } catch (e) {
-                console.error(e);
+                if (e instanceof ClientClosedError) {
+                    isRunning = false;
+                    return;
+                }
+
+                if (e instanceof Error) {
+                    this.emit('error', e);
+                } else {
+                    this.emit('error', new Error(`Unknown error: ${e}`));
+                }
             } finally {
+                if (!isRunning) {
+                    return;
+                }
+
                 timer = setTimeout(readNext, interval);
             }
         };
@@ -69,6 +86,7 @@ export abstract class QueueClient<O, I> {
         }, 0);
 
         return () => {
+            isRunning = false;
             clearTimeout(timer);
         };
     }

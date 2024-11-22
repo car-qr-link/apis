@@ -115,11 +115,13 @@ export class SendNotificationResponse {
     /**
      * The notification that was sent.
      */
+    @Type(() => Notification)
     notification: Notification;
 
     /**
      * The answer from the user, if any.
      */
+    @Type(() => Answer)
     answer?: Answer;
 
     /**

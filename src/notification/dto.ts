@@ -33,7 +33,7 @@ export interface GetReasonsResponse {
 /**
  * Notification interface.
  */
-export interface Notification {
+export class Notification {
     /**
      * The unique identifier of the notification.
      */
@@ -48,12 +48,25 @@ export interface Notification {
      * The date and time when the notification was sent.
      */
     sentAt: Date;
+
+    /**
+     * Constructs a new Notification instance.
+     *
+     * @param id The unique identifier of the notification.
+     * @param reasonId The unique identifier of the reason for the notification.
+     * @param sentAt The date and time when the notification was sent. If not provided, the current date and time will be used.
+     */
+    constructor(id: string, reasonId?: string, sentAt?: Date) {
+        this.id = id;
+        this.reasonId = reasonId;
+        this.sentAt = sentAt ?? new Date();
+    }
 }
 
 /**
  * Represents the structure of an answer to a notification.
  */
-export interface Answer {
+export class Answer {
     /**
      * The message of the answer.
      */
@@ -63,6 +76,17 @@ export interface Answer {
      * The date and time when the answer was received.
      */
     receivedAt: Date;
+
+    /**
+     * Constructs a new Answer.
+     *
+     * @param message The message of the answer.
+     * @param receivedAt The date and time when the answer was received. If not provided, the current date and time will be used.
+     */
+    constructor(message: string, receivedAt?: Date) {
+        this.message = message;
+        this.receivedAt = receivedAt ?? new Date();
+    }
 }
 
 /**
@@ -84,7 +108,7 @@ export interface SendNotificationRequest {
 /**
  * Represents the response from the SendNotification request.
  */
-export interface SendNotificationResponse {
+export class SendNotificationResponse {
     /**
      * The notification that was sent.
      */
@@ -94,4 +118,15 @@ export interface SendNotificationResponse {
      * The answer from the user, if any.
      */
     answer?: Answer;
+
+    /**
+     * Constructs a new SendNotificationResponse.
+     *
+     * @param notification The notification that was sent.
+     * @param answer The answer from the user, if any.
+     */
+    constructor(notification: Notification, answer?: Answer) {
+        this.notification = notification;
+        this.answer = answer;
+    }
 }

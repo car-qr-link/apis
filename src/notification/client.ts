@@ -1,3 +1,4 @@
+import { plainToInstance } from "class-transformer";
 import { HttpClient } from "../common";
 import { GetReasonsResponse, SendNotificationRequest, SendNotificationResponse } from "./dto";
 
@@ -14,6 +15,12 @@ export class Client extends HttpClient {
         return await this.throwOnError(response);
     }
 
+    /**
+     * Sends a notification to the specified account.
+     *
+     * @param request The request containing the account and the notification.
+     * @returns A response containing the notification that was sent and the answer of the user, if any.
+     */
     async sendNotification(
         request: SendNotificationRequest
     ): Promise<SendNotificationResponse> {
@@ -25,6 +32,6 @@ export class Client extends HttpClient {
             body: JSON.stringify(request),
         });
 
-        return await this.throwOnError(response);
+        return plainToInstance(SendNotificationResponse, await this.throwOnError(response));
     }
 }

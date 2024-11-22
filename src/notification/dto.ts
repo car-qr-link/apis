@@ -1,3 +1,4 @@
+import { Type } from "class-transformer";
 import { BaseAccount } from "../common";
 
 
@@ -47,6 +48,7 @@ export class Notification {
     /**
      * The date and time when the notification was sent.
      */
+    @Type(() => Date)
     sentAt: Date;
 
     /**
@@ -75,6 +77,7 @@ export class Answer {
     /**
      * The date and time when the answer was received.
      */
+    @Type(() => Date)
     receivedAt: Date;
 
     /**
